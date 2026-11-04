@@ -1,0 +1,75 @@
+/* Smooth scrolling and transitions */
+html {
+    scroll-behavior: smooth;
+}
+
+body {
+    font-family: 'Inter', sans-serif;
+    overflow-x: hidden;
+    background-color: var(--bg-color);
+    color: var(--text-color);
+    transition: background-color 0.4s ease, color 0.4s ease;
+}
+
+/* Dark/Light Mode Variables for custom elements if needed */
+.dark {
+    --bg-color: #121212;
+    --text-color: #f8fafc;
+}
+:root {
+    --bg-color: #f8fafc;
+    --text-color: #0f172a;
+}
+
+/* Scroll Snapping Container */
+.snap-container {
+    height: 100vh;
+    overflow-y: scroll;
+    scroll-snap-type: y mandatory;
+    scrollbar-width: none; /* Firefox */
+}
+.snap-container::-webkit-scrollbar {
+    display: none; /* Chrome/Safari */
+}
+
+.snap-section {
+    scroll-snap-align: start;
+    scroll-snap-stop: always;
+    height: 100vh;
+    padding-top: 80px; /* Offset for header */
+}
+
+/* Custom scrollbar for inner elements if needed */
+::-webkit-scrollbar {
+    width: 8px;
+}
+::-webkit-scrollbar-track {
+    background: transparent;
+}
+::-webkit-scrollbar-thumb {
+    background: #cbd5e1;
+    border-radius: 4px;
+}
+.dark ::-webkit-scrollbar-thumb {
+    background: #475569;
+}
+
+/* Header Transition */
+#header {
+    transition: all 0.3s ease;
+}
+#header.scrolled {
+    height: 72px; /* 10% smaller than 80px */
+}
+#header.scrolled .nav-link {
+    font-size: 0.875rem;
+}
+
+/* Bouncing Arrow */
+@keyframes bounce-slow {
+    0%, 100% { transform: translateY(-25%); animation-timing-function: cubic-bezier(0.8, 0, 1, 1); }
+    50% { transform: translateY(0); animation-timing-function: cubic-bezier(0, 0, 0.2, 1); }
+}
+.animate-bounce-slow {
+    animation: bounce-slow 2s infinite;
+}
