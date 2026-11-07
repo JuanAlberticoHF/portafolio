@@ -9,7 +9,7 @@ const sectionIds = ['inicio', 'sobre-mi', 'skills', 'proyectos', 'formacion', 'c
 
 // Initial setup for default dark theme icon state
 document.addEventListener('DOMContentLoaded', () => {
-        updateThemeIcon(document.documentElement.classList.contains('dark'));
+    updateThemeIcon(document.documentElement.classList.contains('dark'));
 });
 
 // Track scrolling in the main container for snapping and progress
@@ -41,11 +41,9 @@ mainContainer.addEventListener('scroll', () => {
     updateActiveNav(currentActiveIndex);
 });
 
-// Estas funciones deben estar de forma global, NO las envuelvas en un DOMContentLoaded
-// porque el HTML hace uso de ellas directamente en sus atributos onclick.
+// Estas funciones deben estar de forma global
 function scrollToSection(id, isLogo = false) {
     if (isLogo) {
-        // If logo is clicked, deselect active nav and go to inicio
         navLinks.forEach(link => {
             link.classList.remove('bg-gray-200', 'dark:bg-gray-800', 'text-brand-blue');
         });
@@ -59,10 +57,8 @@ function scrollToSection(id, isLogo = false) {
 function toggleNav(id, element) {
     const isActive = element.classList.contains('text-brand-blue');
     if (isActive) {
-        // Deselecting active element -> go to inicio
         scrollToSection('inicio');
     } else {
-        // Selecting new element
         scrollToSection(id);
     }
 }
@@ -71,10 +67,39 @@ function updateActiveNav(index) {
     navLinks.forEach(link => {
         link.classList.remove('bg-gray-200', 'dark:bg-gray-800', 'text-brand-blue');
     });
-    // section 0 is inicio (no nav button), so map nav links to index 1-5
     if (index > 0 && index <= navLinks.length) {
         navLinks[index - 1].classList.add('bg-gray-200', 'dark:bg-gray-800', 'text-brand-blue');
     }
+}
+
+// --- Mobile Navigation Logic ---
+const mobileMenuBtn = document.getElementById('mobile-menu-btn');
+const mobileMenu = document.getElementById('mobile-menu');
+
+if (mobileMenuBtn && mobileMenu) {
+    mobileMenuBtn.addEventListener('click', () => {
+        const isClosed = mobileMenu.classList.contains('-translate-y-[200%]');
+        if (isClosed) {
+            mobileMenu.classList.remove('-translate-y-[200%]', 'opacity-0', 'pointer-events-none');
+            mobileMenu.classList.add('translate-y-0', 'opacity-100');
+            mobileMenuBtn.innerHTML = '<i class="fa-solid fa-xmark text-xl"></i>';
+        } else {
+            closeMobileMenu();
+        }
+    });
+}
+
+function closeMobileMenu() {
+    if (mobileMenu) {
+        mobileMenu.classList.remove('translate-y-0', 'opacity-100');
+        mobileMenu.classList.add('-translate-y-[200%]', 'opacity-0', 'pointer-events-none');
+        if (mobileMenuBtn) mobileMenuBtn.innerHTML = '<i class="fa-solid fa-bars text-xl"></i>';
+    }
+}
+
+function toggleNavMobile(id) {
+    scrollToSection(id);
+    closeMobileMenu();
 }
 
 // --- Theme Toggle Logic ---
@@ -98,7 +123,7 @@ themeToggleBtn.addEventListener('click', () => {
     updateThemeIcon(isDark);
 });
 
-// --- Skills Hover Logic ---
+// --- Skills Dynamic Logic ---
 const skillItems = document.querySelectorAll('.skill-item');
 const skillInfoBox = document.getElementById('skill-info-box');
 const skillNameDisplay = document.getElementById('skill-name-display');
@@ -106,37 +131,43 @@ const skillLevelDisplay = document.getElementById('skill-level-display');
 const skillDescDisplay = document.getElementById('skill-desc-display');
 const skillIconDisplay = document.getElementById('skill-icon-display');
 
-skillItems.forEach(item => {
-    item.addEventListener('mouseenter', () => {
-        const name = item.getAttribute('data-name');
-        const level = item.getAttribute('data-level');
-        const desc = item.getAttribute('data-desc');
+function updateSkillInfo(item) {
+    const name = item.getAttribute('data-name');
+    const level = item.getAttribute('data-level');
+    const desc = item.getAttribute('data-desc');
+    
+    skillInfoBox.classList.add('opacity-0');
+    
+    setTimeout(() => {
+        skillNameDisplay.textContent = name;
+        skillLevelDisplay.textContent = level;
+        skillDescDisplay.textContent = desc;
         
-        // Animación de opacidad al cambiar
-        skillInfoBox.classList.add('opacity-0');
+        skillIconDisplay.innerHTML = item.innerHTML;
         
-        setTimeout(() => {
-            skillNameDisplay.textContent = name;
-            skillLevelDisplay.textContent = level;
-            skillDescDisplay.textContent = desc;
-            
-            // Copy the icon HTML
-            skillIconDisplay.innerHTML = item.innerHTML;
-            
-            // Increase only the selected icon, keeping the container size unchanged
-            const selectedIcon = skillIconDisplay.querySelector('img');
-            if (selectedIcon instanceof HTMLElement) {
-                if (selectedIcon.tagName === 'IMG') {
-                    selectedIcon.classList.add('w-24', 'h-24', 'object-contain');
-                }
-            }
+        const selectedIcon = skillIconDisplay.querySelector('img');
+        if (selectedIcon instanceof HTMLElement && selectedIcon.tagName === 'IMG') {
+            selectedIcon.classList.add('w-16', 'h-16', 'sm:w-20', 'sm:h-20', 'object-contain');
+        }
 
-            // Add pop animation class to the icon inside
-            skillIconDisplay.classList.add('text-brand-blue', 'scale-110');
-            
-            // Mostrar de nuevo
-            skillInfoBox.classList.remove('opacity-0');
-        }, 200);
+        skillIconDisplay.classList.add('text-brand-blue', 'scale-110');
+        skillInfoBox.classList.remove('opacity-0');
+    }, 200);
+}
+
+skillItems.forEach(item => {
+    // Hover event for desktop
+    item.addEventListener('mouseenter', () => updateSkillInfo(item));
+    
+    // Tap/Click event for mobile
+    item.addEventListener('click', () => {
+        updateSkillInfo(item);
+        // Desplazamiento sutil hacia la tarjeta en pantallas pequeñas
+        if (window.innerWidth < 1024) {
+            setTimeout(() => {
+                skillInfoBox.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+            }, 250); // espera brevemente para que empiece la animación
+        }
     });
     
     item.addEventListener('mouseleave', () => {
@@ -156,7 +187,6 @@ const validateForm = () => {
     const emailVal = inputEmail.value.trim();
     const messageVal = inputMessage.value.trim();
     
-    // Basic email regex mapping an "@" requirement correctly
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     
     if (nameVal !== '' && messageVal !== '' && emailRegex.test(emailVal)) {
@@ -172,13 +202,11 @@ inputMessage.addEventListener('input', validateForm);
 
 contactForm.addEventListener('submit', (e) => {
     e.preventDefault();
-    // Create a custom message box instead of alert()
     const box = document.createElement('div');
-    box.className = 'fixed bottom-4 right-4 bg-brand-blue text-white px-6 py-3 rounded-lg shadow-lg z-50 animate-bounce-slow';
+    box.className = 'fixed bottom-4 right-4 bg-brand-blue text-white px-6 py-3 rounded-lg shadow-lg z-50 animate-bounce-slow text-sm sm:text-base';
     box.innerText = '¡Mensaje simulado enviado con éxito!';
     document.body.appendChild(box);
     
-    // Reset form
     contactForm.reset();
     validateForm();
 
@@ -188,18 +216,12 @@ contactForm.addEventListener('submit', (e) => {
 });
 
 function downloadCV() {
-    // 1. Ruta del archivo
     const rutaCV = 'assets/docs/jahf-cv.pdf';
-    
-    // 2. Crear un elemento <a> invisible en memoria
     const enlace = document.createElement('a');
     enlace.href = rutaCV;
-    enlace.download = 'CV_Juan_Alberto_Hernandez.pdf'; // Nombre con el que se descargará
+    enlace.download = 'CV_Juan_Alberto_Hernandez.pdf';
     
-    // 3. Añadirlo temporalmente al documento y simular el clic
     document.body.appendChild(enlace);
     enlace.click();
-    
-    // 4. Limpiar el elemento creado
     document.body.removeChild(enlace);
 }

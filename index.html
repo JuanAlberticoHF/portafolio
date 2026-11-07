@@ -45,7 +45,7 @@
 <body class="bg-brand-light text-brand-dark dark:bg-brand-dark dark:text-brand-light antialiased transition-colors duration-300">
 
     <!-- Header -->
-    <header id="header" class="fixed top-0 left-0 w-full h-[80px] z-50 bg-brand-light/90 dark:bg-brand-dark/90 backdrop-blur-md border-b border-gray-200 dark:border-gray-800 flex items-center px-6 sm:px-10 justify-between">
+    <header id="header" class="fixed top-0 left-0 w-full h-[80px] z-50 bg-brand-light/90 dark:bg-brand-dark/90 backdrop-blur-md border-b border-gray-200 dark:border-gray-800 flex items-center px-6 sm:px-10 justify-between transition-all duration-300">
         
         <!-- Left: Logo / Name -->
         <div id="logo-container" class="group cursor-pointer flex items-center h-full font-bold text-xl tracking-wider" onclick="scrollToSection('inicio', true)">
@@ -57,7 +57,7 @@
             <span class="text-brand-blue">}</span>
         </div>
 
-        <!-- Center: Navigation -->
+        <!-- Center: Navigation (Desktop) -->
         <nav class="hidden md:flex items-center gap-2 lg:gap-6">
             <button onclick="toggleNav('sobre-mi', this)" class="nav-link px-3 py-2 rounded-md font-medium text-sm transition-all hover:bg-gray-200 dark:hover:bg-gray-800 focus:outline-none">Sobre Mí</button>
             <button onclick="toggleNav('skills', this)" class="nav-link px-3 py-2 rounded-md font-medium text-sm transition-all hover:bg-gray-200 dark:hover:bg-gray-800 focus:outline-none">Skills</button>
@@ -66,8 +66,8 @@
             <button onclick="toggleNav('contacto', this)" class="nav-link px-3 py-2 rounded-md font-medium text-sm transition-all hover:bg-gray-200 dark:hover:bg-gray-800 focus:outline-none">Contacto</button>
         </nav>
 
-        <!-- Right: Theme Toggle -->
-        <div class="flex items-center min-w-[50px] justify-end">
+        <!-- Right: Theme Toggle & Mobile Menu Btn -->
+        <div class="flex items-center justify-end gap-2 sm:gap-4">
             <button id="theme-toggle" class="p-2 rounded-full hover:bg-gray-200 dark:hover:bg-gray-800 transition-colors focus:outline-none" aria-label="Alternar tema">
                 <!-- Sun Icon / Yellow Circle -->
                 <svg id="icon-sun" class="w-8 h-8 hidden text-yellow-400" fill="currentColor" viewBox="0 0 20 20">
@@ -78,13 +78,27 @@
                     <path d="M17.293 13.293A8 8 0 016.707 2.707a8.001 8.001 0 1010.586 10.586z" />
                 </svg>
             </button>
+            
+            <!-- Hamburger Menu Button (Mobile) -->
+            <button id="mobile-menu-btn" class="md:hidden p-2 rounded-md hover:bg-gray-200 dark:hover:bg-gray-800 transition-colors focus:outline-none text-brand-dark dark:text-brand-light">
+                <i class="fa-solid fa-bars text-xl"></i>
+            </button>
         </div>
         
-        <!-- Progress Bar (Ahora integrado dentro del header) -->
+        <!-- Progress Bar -->
         <div class="absolute bottom-0 left-0 w-full h-1 z-40 bg-gray-200 dark:bg-gray-700" id="progress-container">
             <div id="progress-bar" class="h-full bg-brand-blue w-0 transition-all duration-150 ease-out"></div>
         </div>
     </header>
+
+    <!-- Mobile Menu Overlay -->
+    <div id="mobile-menu" class="fixed top-[80px] left-0 w-full bg-brand-light dark:bg-brand-dark border-b border-gray-200 dark:border-gray-800 flex flex-col items-center gap-2 py-6 px-6 transition-all duration-300 transform -translate-y-[200%] opacity-0 pointer-events-none z-40 shadow-lg md:hidden">
+        <button onclick="toggleNavMobile('sobre-mi')" class="nav-link-mobile px-4 py-3 w-full text-center rounded-md font-medium text-base transition-all hover:bg-gray-200 dark:hover:bg-gray-800 text-brand-dark dark:text-brand-light">Sobre Mí</button>
+        <button onclick="toggleNavMobile('skills')" class="nav-link-mobile px-4 py-3 w-full text-center rounded-md font-medium text-base transition-all hover:bg-gray-200 dark:hover:bg-gray-800 text-brand-dark dark:text-brand-light">Skills</button>
+        <button onclick="toggleNavMobile('proyectos')" class="nav-link-mobile px-4 py-3 w-full text-center rounded-md font-medium text-base transition-all hover:bg-gray-200 dark:hover:bg-gray-800 text-brand-dark dark:text-brand-light">Proyectos</button>
+        <button onclick="toggleNavMobile('formacion')" class="nav-link-mobile px-4 py-3 w-full text-center rounded-md font-medium text-base transition-all hover:bg-gray-200 dark:hover:bg-gray-800 text-brand-dark dark:text-brand-light">Formación</button>
+        <button onclick="toggleNavMobile('contacto')" class="nav-link-mobile px-4 py-3 w-full text-center rounded-md font-medium text-base transition-all hover:bg-gray-200 dark:hover:bg-gray-800 text-brand-dark dark:text-brand-light">Contacto</button>
+    </div>
 
     <!-- Main Scroll Container -->
     <main id="main-container" class="snap-container relative">
@@ -95,21 +109,21 @@
                 <!-- Info -->
                 <div class="order-2 md:order-1 flex flex-col items-center md:items-start text-center md:text-left">
                     <p class="text-sm md:text-base font-medium tracking-widest text-brand-blue mb-2 uppercase"><i class="fa-solid fa-code mr-2"></i>Desarrollador Junior</p>
-                    <h1 class="text-4xl md:text-6xl font-bold mb-4 leading-tight">JUAN ALBERTO <br/>HERNANDEZ</h1>
+                    <h1 class="text-4xl sm:text-5xl md:text-6xl font-bold mb-4 leading-tight">JUAN ALBERTO <br/>HERNANDEZ</h1>
                     <p class="text-gray-600 dark:text-gray-400 mb-6 max-w-md text-sm md:text-base">
                         Soy desarrollador de software junior de Murcia con conocimientos en aplicaciones multiplataforma, web y APIs. Actualmente avanzando en el desarrollo backend con Java y Spring Boot.
                     </p>
                     <!-- Socials -->
-                    <div class="flex gap-4 mb-8">
-                        <a href="https://www.linkedin.com/in/juanalbertohf/" class="w-14 h-14 rounded-full border border-gray-300 dark:border-gray-700 flex items-center justify-center hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors">
-                            <svg class="w-7 h-7" fill="currentColor" viewBox="0 0 24 24"><path d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.783 1.764-1.75 1.764zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z"/></svg>
+                    <div class="flex gap-4 mb-8 justify-center md:justify-start">
+                        <a href="https://www.linkedin.com/in/juanalbertohf/" class="w-12 h-12 sm:w-14 sm:h-14 rounded-full border border-gray-300 dark:border-gray-700 flex items-center justify-center hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors">
+                            <svg class="w-6 h-6 sm:w-7 sm:h-7" fill="currentColor" viewBox="0 0 24 24"><path d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.783 1.764-1.75 1.764zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z"/></svg>
                         </a>
-                        <a href="https://github.com/JuanAlberticoHF" class="w-14 h-14 rounded-full border border-gray-300 dark:border-gray-700 flex items-center justify-center hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors">
-                            <svg class="w-7 h-7" fill="currentColor" viewBox="0 0 24 24"><path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/></svg>
+                        <a href="https://github.com/JuanAlberticoHF" class="w-12 h-12 sm:w-14 sm:h-14 rounded-full border border-gray-300 dark:border-gray-700 flex items-center justify-center hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors">
+                            <svg class="w-6 h-6 sm:w-7 sm:h-7" fill="currentColor" viewBox="0 0 24 24"><path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/></svg>
                         </a>
                     </div>
                     <!-- Buttons -->
-                    <div class="flex gap-4">
+                    <div class="flex flex-wrap gap-4 justify-center md:justify-start">
                         <button onclick="downloadCV()" class="px-6 py-2 border border-brand-dark dark:border-brand-light font-medium rounded hover:bg-brand-dark hover:text-white dark:hover:bg-brand-light dark:hover:text-brand-dark transition-colors flex items-center gap-2">
                             <i class="fa-solid fa-download"></i> CV
                         </button>
@@ -120,15 +134,15 @@
                 </div>
                 <!-- Image -->
                 <div class="order-1 md:order-2 flex justify-center">
-                    <div class="w-60 h-60 md:w-[400px] md:h-[400px] rounded-full overflow-hidden border-4 border-gray-200 dark:border-gray-800 shadow-xl hover:scale-105 transition-transform duration-300">
+                    <div class="w-48 h-48 sm:w-60 sm:h-60 md:w-[400px] md:h-[400px] rounded-full overflow-hidden border-4 border-gray-200 dark:border-gray-800 shadow-xl hover:scale-105 transition-transform duration-300">
                         <img src="assets/img/pfp.png" alt="Perfil" class="w-full h-full object-cover" />
                     </div>
                 </div>
             </div>
             
-            <!-- Next Arrow -->
-            <button onclick="scrollToSection('sobre-mi')" class="absolute bottom-8 flex flex-col items-center group opacity-70 hover:opacity-100 transition-opacity focus:outline-none">
-                <span class="text-xs uppercase tracking-widest mb-2 font-medium">Sobre Mi</span>
+            <!-- Next Arrow (Hidden on very small screens to save space if needed, but flex lets it breathe) -->
+            <button onclick="scrollToSection('sobre-mi')" class="hidden sm:flex absolute bottom-8 flex-col items-center group opacity-70 hover:opacity-100 transition-opacity focus:outline-none z-10">
+                <span class="text-xs uppercase tracking-widest mb-2 font-medium">Sobre Mí</span>
                 <svg class="w-6 h-6 animate-bounce-slow" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
             </button>
         </section>
@@ -136,10 +150,10 @@
         <!-- SECCIÓN 1: SOBRE MÍ -->
         <section id="sobre-mi" class="snap-section relative flex flex-col justify-center items-center px-6 lg:px-20">
             <div class="w-full max-w-6xl">
-                <h2 class="text-3xl md:text-4xl font-bold mb-10 uppercase tracking-wide">Sobre Mi</h2>
-                <div class="grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
+                <h2 class="text-3xl md:text-4xl font-bold mb-8 md:mb-10 uppercase tracking-wide text-center md:text-left">Sobre Mí</h2>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-8 md:gap-12 items-center">
                     <!-- Text -->
-                    <div class="space-y-4 text-sm md:text-base text-gray-700 dark:text-gray-300 leading-relaxed">
+                    <div class="space-y-4 text-sm md:text-base text-gray-700 dark:text-gray-300 leading-relaxed text-center md:text-left">
                         <p>Mi nombre es Juan Alberto Hernández y tengo 21 años. Desde pequeño he tenido la informática muy presente y junto a mi creatividad me fascinó las posibilidades del sector.</p>
                         <p>Durante la secundaria gestioné servidores de juego y en bachiller tuve mi primer acercamiento a la programación con HTML y C++. Mas adelante me matriculé en un grado superior en DAM, introduciendome a la programación y que finalmente impulsé mi decisión de dedicarme al desarrollo de aplicaciones.</p>
                         <p>Durante mi formación participé en el torneo regional RM Skills 2025, ganando la medalla de bronce en la modalidad de desarrollo web. Un evento inolvidable.</p>
@@ -147,7 +161,7 @@
                     </div>
                     <!-- Photo -->
                     <div class="flex justify-center md:justify-end">
-                        <div class="w-full max-w-xs md:max-w-sm rounded-3xl overflow-hidden shadow-2xl transition-transform duration-300 hover:scale-105 border border-gray-200 dark:border-gray-800">
+                        <div class="w-full max-w-[220px] sm:max-w-xs md:max-w-sm rounded-3xl overflow-hidden shadow-2xl transition-transform duration-300 hover:scale-105 border border-gray-200 dark:border-gray-800">
                             <img src="assets/img/rm-skills-25.png" alt="Sobre Mi" class="w-full h-full object-cover" />
                         </div>
                     </div>
@@ -155,7 +169,7 @@
             </div>
 
             <!-- Next Arrow -->
-            <button onclick="scrollToSection('skills')" class="absolute bottom-8 flex flex-col items-center group opacity-70 hover:opacity-100 transition-opacity focus:outline-none">
+            <button onclick="scrollToSection('skills')" class="hidden sm:flex absolute bottom-8 flex-col items-center group opacity-70 hover:opacity-100 transition-opacity focus:outline-none z-10">
                 <span class="text-xs uppercase tracking-widest mb-2 font-medium">Skills</span>
                 <svg class="w-6 h-6 animate-bounce-slow" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
             </button>
@@ -163,18 +177,18 @@
 
         <!-- SECCIÓN 2: SKILLS -->
         <section id="skills" class="snap-section relative flex flex-col justify-center items-center px-6 lg:px-20">
-            <div class="w-full max-w-6xl h-full flex flex-col justify-center py-10">
-                <h2 class="text-3xl md:text-4xl font-bold mb-8 uppercase tracking-wide">Skills</h2>
-                <!-- <p class="text-gray-500 mb-10 text-sm md:text-base">Habilidades destacadas.</p> -->
-
-                <div class="flex flex-col lg:flex-row gap-10 flex-1 overflow-hidden h-full pb-10">
+            <div class="w-full max-w-6xl h-full flex flex-col py-6 md:py-10 min-h-0 w-full relative z-0">
+                <h2 class="text-3xl md:text-4xl font-bold mb-4 md:mb-6 uppercase tracking-wide text-center md:text-left shrink-0">Skills</h2>
+                
+                <!-- Flex contenedor principal con min-h-0 para permitir scroll de los hijos -->
+                <div class="flex flex-col lg:flex-row gap-6 lg:gap-10 flex-1 min-h-0 w-full">
                     
-                    <!-- Left: Categories -->
-                    <div class="w-full lg:w-2/3 flex flex-col gap-6 overflow-y-auto pr-4 custom-scrollbar h-full pb-4">
+                    <!-- Left: Categories (Ahora scrolleable internamente y despejando el area del botón absolute) -->
+                    <div class="w-full lg:w-2/3 flex flex-col gap-6 overflow-y-auto pr-2 lg:pr-4 custom-scrollbar h-full pb-16 lg:pb-12">
                         <!-- Lenguajes -->
                         <div>
                             <h3 class="text-sm font-semibold text-gray-500 dark:text-gray-400 mb-3 uppercase">Lenguajes</h3>
-                            <div class="grid grid-cols-6 gap-2 w-full">
+                            <div class="grid grid-cols-3 sm:grid-cols-4 md:grid-cols-6 gap-2 w-full">
                                 <div class="skill-item col-span-1 h-14 flex items-center justify-center bg-white dark:bg-brand-cardDark border border-gray-200 dark:border-gray-700 rounded-lg cursor-pointer hover:border-brand-blue dark:hover:border-brand-blue hover:scale-110 transition-all text-2xl text-gray-700 dark:text-gray-300 hover:text-brand-blue dark:hover:text-brand-blue"
 									data-name="Java"
 									data-level="Avanzado"
@@ -199,16 +213,16 @@
 									data-desc="Comprensión de los fundamentos del lenguaje, manipulación del DOM, manipulación de eventos asincronos y uso de frameworks JavaScript">
                                     <img src="assets/img/skills/javascript-logo.svg" alt="JavaScript" class="w-8 h-8 object-contain">
                                 </div>
-                                <!-- Vacío (1) -->
-                                <div class="col-span-1 h-14 rounded-lg bg-gray-200 dark:bg-slate-700"></div>
-                                <div class="col-span-1 h-14 rounded-lg bg-gray-200 dark:bg-slate-700"></div>
+                                <!-- Vacíos (Hidden on mobile to save space) -->
+                                <div class="col-span-1 h-14 rounded-lg bg-gray-200 dark:bg-slate-700 hidden md:block"></div>
+                                <div class="col-span-1 h-14 rounded-lg bg-gray-200 dark:bg-slate-700 hidden md:block"></div>
                             </div>
                         </div>
 
                         <!-- Frameworks -->
                         <div>
                             <h3 class="text-sm font-semibold text-gray-500 dark:text-gray-400 mb-3 uppercase">Frameworks</h3>
-                            <div class="grid grid-cols-6 gap-2 w-full">
+                            <div class="grid grid-cols-3 sm:grid-cols-4 md:grid-cols-6 gap-2 w-full">
                                 <div class="skill-item col-span-1 h-14 flex items-center justify-center bg-white dark:bg-brand-cardDark border border-gray-200 dark:border-gray-700 rounded-lg cursor-pointer hover:border-brand-blue dark:hover:border-brand-blue hover:scale-110 transition-all text-2xl text-gray-700 dark:text-gray-300 hover:text-brand-blue dark:hover:text-brand-blue"
 									data-name="Spring Boot"
 									data-level="Intermedio"
@@ -221,18 +235,18 @@
 									data-desc="Mapeo Objeto-Relacional (ORM), gestión de entidades, relaciones y persistencia eficiente de datos evitando redundancias.">
                                     <img src="assets/img/skills/hibernate-logo.svg" alt="Hibernate" class="w-8 h-8 object-contain">
                                 </div>
-                                <!-- Vacíos (4) -->
-                                <div class="col-span-1 h-14 rounded-lg bg-gray-200 dark:bg-slate-700"></div>
-                                <div class="col-span-1 h-14 rounded-lg bg-gray-200 dark:bg-slate-700"></div>
-                                <div class="col-span-1 h-14 rounded-lg bg-gray-200 dark:bg-slate-700"></div>
-                                <div class="col-span-1 h-14 rounded-lg bg-gray-200 dark:bg-slate-700"></div>
+                                <!-- Vacíos -->
+                                <div class="col-span-1 h-14 rounded-lg bg-gray-200 dark:bg-slate-700 hidden md:block"></div>
+                                <div class="col-span-1 h-14 rounded-lg bg-gray-200 dark:bg-slate-700 hidden md:block"></div>
+                                <div class="col-span-1 h-14 rounded-lg bg-gray-200 dark:bg-slate-700 hidden md:block"></div>
+                                <div class="col-span-1 h-14 rounded-lg bg-gray-200 dark:bg-slate-700 hidden md:block"></div>
                             </div>
                         </div>
 
                         <!-- Persistencia -->
                         <div>
                             <h3 class="text-sm font-semibold text-gray-500 dark:text-gray-400 mb-3 uppercase">Persistencia</h3>
-                            <div class="grid grid-cols-6 gap-2 w-full">
+                            <div class="grid grid-cols-3 sm:grid-cols-4 md:grid-cols-6 gap-2 w-full">
                                 <div class="skill-item col-span-1 h-14 flex items-center justify-center bg-white dark:bg-brand-cardDark border border-gray-200 dark:border-gray-700 rounded-lg cursor-pointer hover:border-brand-blue dark:hover:border-brand-blue hover:scale-110 transition-all text-2xl text-gray-700 dark:text-gray-300 hover:text-brand-blue dark:hover:text-brand-blue"
 									data-name="MySQL"
 									data-level="Intermedio"
@@ -248,20 +262,20 @@
                                 <div class="skill-item col-span-1 h-14 flex items-center justify-center bg-white dark:bg-brand-cardDark border border-gray-200 dark:border-gray-700 rounded-lg cursor-pointer hover:border-brand-blue dark:hover:border-brand-blue hover:scale-110 transition-all text-2xl text-gray-700 dark:text-gray-300 hover:text-brand-blue dark:hover:text-brand-blue"
 									data-name="Firebase DB"
 									data-level="Básico"
-									data-desc="Integración de Firestore y Realtime Database para la sincronización de datos en tiempo real y autenticación basica para el registro de clientes. Experiencia obtenida en el desarrollo de mi proyecto ShareShopping.">
+									data-desc="Integración de Firestore y Realtime Database para la sincronización de datos en tiempo real y autenticación basica para el registro de clientes.">
                                     <img src="assets/img/skills/firebase-logo.svg" alt="Firebase DB" class="w-8 h-8 object-contain">
                                 </div>
-                                <!-- Vacíos (3) -->
-                                <div class="col-span-1 h-14 rounded-lg bg-gray-200 dark:bg-slate-700"></div>
-                                <div class="col-span-1 h-14 rounded-lg bg-gray-200 dark:bg-slate-700"></div>
-                                <div class="col-span-1 h-14 rounded-lg bg-gray-200 dark:bg-slate-700"></div>
+                                <!-- Vacíos -->
+                                <div class="col-span-1 h-14 rounded-lg bg-gray-200 dark:bg-slate-700 hidden md:block"></div>
+                                <div class="col-span-1 h-14 rounded-lg bg-gray-200 dark:bg-slate-700 hidden md:block"></div>
+                                <div class="col-span-1 h-14 rounded-lg bg-gray-200 dark:bg-slate-700 hidden md:block"></div>
                             </div>
                         </div>
 
                         <!-- Herramientas -->
                         <div>
                             <h3 class="text-sm font-semibold text-gray-500 dark:text-gray-400 mb-3 uppercase">Herramientas</h3>
-                            <div class="grid grid-cols-6 gap-2 w-full">
+                            <div class="grid grid-cols-3 sm:grid-cols-4 md:grid-cols-6 gap-2 w-full">
                                 <div class="skill-item col-span-1 h-14 flex items-center justify-center bg-white dark:bg-brand-cardDark border border-gray-200 dark:border-gray-700 rounded-lg cursor-pointer hover:border-brand-blue dark:hover:border-brand-blue hover:scale-110 transition-all text-2xl text-gray-700 dark:text-gray-300 hover:text-brand-blue dark:hover:text-brand-blue"
 									data-name="Docker"
 									data-level="Básico"
@@ -271,13 +285,13 @@
                                 <div class="skill-item col-span-1 h-14 flex items-center justify-center bg-white dark:bg-brand-cardDark border border-gray-200 dark:border-gray-700 rounded-lg cursor-pointer hover:border-brand-blue dark:hover:border-brand-blue hover:scale-110 transition-all text-2xl text-gray-700 dark:text-gray-300 hover:text-brand-blue dark:hover:text-brand-blue"
 									data-name="Git"
 									data-level="Intermedio"
-									data-desc="Control de versiones, flujos de trabajo colaborativos (GitFlow), resolución de conflictos, rebase, gestión de repositorios remotos y submodulos para dividir responsabilidades en un proyecto conjunto.">
+									data-desc="Control de versiones, flujos de trabajo colaborativos (GitFlow), resolución de conflictos, rebase, gestión de repositorios remotos y submodulos para dividir responsabilidades.">
                                     <img src="assets/img/skills/git-logo.svg" alt="Git" class="w-8 h-8 object-contain">
                                 </div>
                                 <div class="skill-item col-span-1 h-14 flex items-center justify-center bg-white dark:bg-brand-cardDark border border-gray-200 dark:border-gray-700 rounded-lg cursor-pointer hover:border-brand-blue dark:hover:border-brand-blue hover:scale-110 transition-all text-2xl text-gray-700 dark:text-gray-300 hover:text-brand-blue dark:hover:text-brand-blue"
 									data-name="GitHub"
 									data-level="Intermedio"
-									data-desc="Portal de proyectos, gestión de repositorios remotos, gestión de issues y milestones, organización con GitHub Project, publicación de webs con Pages y colaboración en otros proyectos.">
+									data-desc="Portal de proyectos, gestión de repositorios remotos, gestión de issues y milestones, organización con GitHub Project, publicación de webs con Pages.">
                                     <img src="assets/img/skills/github-logo.svg" alt="GitHub" class="w-8 h-8 object-contain">
                                 </div>
                                 <div class="skill-item col-span-1 h-14 flex items-center justify-center bg-white dark:bg-brand-cardDark border border-gray-200 dark:border-gray-700 rounded-lg cursor-pointer hover:border-brand-blue dark:hover:border-brand-blue hover:scale-110 transition-all text-2xl text-gray-700 dark:text-gray-300 hover:text-brand-blue dark:hover:text-brand-blue"
@@ -292,15 +306,15 @@
 									data-desc="Pruebas de endpoints RESTful, automatización de colecciones de prueba y documentación de APIs.">
                                     <img src="assets/img/skills/postman-logo.svg" alt="Postman" class="w-8 h-8 object-contain">
                                 </div>
-                                <!-- Vacíos (1) -->
-                                <div class="col-span-1 h-14 rounded-lg bg-gray-200 dark:bg-slate-700"></div>
+                                <!-- Vacíos -->
+                                <div class="col-span-1 h-14 rounded-lg bg-gray-200 dark:bg-slate-700 hidden md:block"></div>
                             </div>
                         </div>
 
                         <!-- IDE & Aplicaciones -->
                         <div>
                             <h3 class="text-sm font-semibold text-gray-500 dark:text-gray-400 mb-3 uppercase">IDE & Aplicaciones</h3>
-                            <div class="grid grid-cols-6 gap-2 w-full">
+                            <div class="grid grid-cols-3 sm:grid-cols-4 md:grid-cols-6 gap-2 w-full">
                                 <div class="skill-item col-span-1 h-14 flex items-center justify-center bg-white dark:bg-brand-cardDark border border-gray-200 dark:border-gray-700 rounded-lg cursor-pointer hover:border-brand-blue dark:hover:border-brand-blue hover:scale-110 transition-all text-2xl text-gray-700 dark:text-gray-300 hover:text-brand-blue dark:hover:text-brand-blue"
 									data-name="IntelliJ IDEA"
 									data-level="Intermedio"
@@ -331,15 +345,15 @@
 									data-desc="Editor de codigo general utilizado principalmente en el desarrollo web.">
                                     <img src="assets/img/skills/vsc-logo.svg" alt="VS Code" class="w-8 h-8 object-contain">
                                 </div>
-                                <!-- Vacíos (1) -->
-                                <div class="col-span-1 h-14 rounded-lg bg-gray-200 dark:bg-slate-700"></div>
+                                <!-- Vacíos -->
+                                <div class="col-span-1 h-14 rounded-lg bg-gray-200 dark:bg-slate-700 hidden md:block"></div>
                             </div>
                         </div>
 
                         <!-- Habilidades Blandas -->
                         <div>
                             <h3 class="text-sm font-semibold text-gray-500 dark:text-gray-400 mb-3 uppercase">Habilidades Blandas</h3>
-                            <div class="grid grid-cols-6 gap-2 w-full">
+                            <div class="grid grid-cols-3 sm:grid-cols-4 md:grid-cols-6 gap-2 w-full">
                                 <div class="skill-item col-span-1 h-14 flex items-center justify-center bg-white dark:bg-brand-cardDark border border-gray-200 dark:border-gray-700 rounded-lg cursor-pointer hover:border-brand-blue dark:hover:border-brand-blue hover:scale-110 transition-all text-2xl text-gray-700 dark:text-gray-300 hover:text-brand-blue dark:hover:text-brand-blue"
 									data-name="Autodidacta"
 									data-level=""
@@ -364,23 +378,25 @@
 									data-desc="Iniciativa para mejorar y proponer ideas.">
                                     <i class="fa-solid fa-lightbulb"></i>
                                 </div>
-                                <!-- Vacíos (2) -->
-                                <div class="col-span-1 h-14 rounded-lg bg-gray-200 dark:bg-slate-700"></div>
-                                <div class="col-span-1 h-14 rounded-lg bg-gray-200 dark:bg-slate-700"></div>
+                                <!-- Vacíos -->
+                                <div class="col-span-1 h-14 rounded-lg bg-gray-200 dark:bg-slate-700 hidden md:block"></div>
+                                <div class="col-span-1 h-14 rounded-lg bg-gray-200 dark:bg-slate-700 hidden md:block"></div>
                             </div>
                         </div>
                     </div>
 
-                    <!-- Right: Dynamic Info Box -->
-                    <div class="w-full lg:w-1/3 flex items-stretch h-full">
-                        <div class="w-full h-full bg-white dark:bg-brand-cardDark border border-gray-200 dark:border-gray-800 rounded-3xl p-8 shadow-xl flex flex-col items-center justify-center text-center transition-opacity duration-300" id="skill-info-box">
-                            <div class="w-32 h-32 rounded-3xl bg-gray-100 dark:bg-gray-800 mb-8 flex items-center justify-center text-gray-400 text-6xl transition-all duration-300" id="skill-icon-display">
+                    <!-- Right/Bottom: Dynamic Info Box -->
+                    <!-- Contenedor adaptado para expandirse (flex-1) con la altura disponible -->
+                    <div class="w-full lg:w-1/3 flex flex-col lg:h-full shrink-0 pb-6 lg:pb-12">
+                        <div class="w-full flex-1 min-h-[220px] lg:min-h-0 bg-white dark:bg-brand-cardDark border border-gray-200 dark:border-gray-800 rounded-3xl p-6 sm:p-8 shadow-xl flex flex-col items-center justify-center text-center transition-opacity duration-300" id="skill-info-box">
+                            <div class="w-24 h-24 sm:w-32 sm:h-32 rounded-3xl bg-gray-100 dark:bg-gray-800 mb-6 sm:mb-8 flex items-center justify-center text-gray-400 text-5xl sm:text-6xl transition-all duration-300" id="skill-icon-display">
                                 <!-- Default Icon -->
-                                <i class="fa-solid fa-mouse-pointer"></i>
+                                <i class="fa-solid fa-mouse-pointer hidden md:block"></i>
+                                <i class="fa-solid fa-hand-pointer md:hidden"></i>
                             </div>
-                            <h3 class="text-3xl font-bold mb-3" id="skill-name-display">Pasa el ratón</h3>
-                            <p class="text-base text-brand-blue font-semibold mb-6" id="skill-level-display">Dominio</p>
-                            <p class="text-gray-600 dark:text-gray-400 text-base leading-relaxed" id="skill-desc-display">Descripción personalizada sobre el dominio y la aplicación de cada una de las habilidades.</p>
+                            <h3 class="text-2xl sm:text-3xl font-bold mb-2 sm:mb-3" id="skill-name-display">Selecciona</h3>
+                            <p class="text-sm sm:text-base text-brand-blue font-semibold mb-4 sm:mb-6" id="skill-level-display">Dominio</p>
+                            <p class="text-gray-600 dark:text-gray-400 text-sm sm:text-base leading-relaxed" id="skill-desc-display">Toca (móvil) o pasa el ratón (PC) sobre una habilidad para ver más detalles.</p>
                         </div>
                     </div>
 
@@ -388,7 +404,8 @@
             </div>
 
             <!-- Next Arrow -->
-            <button onclick="scrollToSection('proyectos')" class="absolute bottom-8 flex flex-col items-center group opacity-70 hover:opacity-100 transition-opacity focus:outline-none">
+            <!-- Botón posicionado globalmente con z-index para no ser solapado -->
+            <button onclick="scrollToSection('proyectos')" class="hidden sm:flex absolute bottom-4 lg:bottom-8 flex-col items-center group opacity-70 hover:opacity-100 transition-opacity focus:outline-none z-10">
                 <span class="text-xs uppercase tracking-widest mb-2 font-medium">Proyectos</span>
                 <svg class="w-6 h-6 animate-bounce-slow" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
             </button>
@@ -397,28 +414,28 @@
         <!-- SECCIÓN 3: PROYECTOS -->
         <section id="proyectos" class="snap-section relative flex flex-col justify-center items-center px-6 lg:px-20">
             <div class="w-full max-w-6xl">
-                <h2 class="text-3xl md:text-4xl font-bold mb-2 uppercase tracking-wide">Proyectos</h2>
-                <p class="text-gray-500 mb-10 text-sm md:text-base">Proyectos académicos y complejos.</p>
+                <h2 class="text-3xl md:text-4xl font-bold mb-2 uppercase tracking-wide text-center md:text-left">Proyectos</h2>
+                <p class="text-gray-500 mb-8 md:mb-10 text-sm md:text-base text-center md:text-left">Proyectos académicos y complejos.</p>
                 
-                <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6 md:gap-8">
                     <!-- Project 1 -->
                     <div class="bg-white dark:bg-brand-cardDark border border-gray-200 dark:border-gray-800 rounded-3xl overflow-hidden shadow-lg group">
-                        <div class="h-48 bg-gray-200 dark:bg-gray-700 relative overflow-hidden">
+                        <div class="h-40 sm:h-48 bg-gray-200 dark:bg-gray-700 relative overflow-hidden">
                             <img src="assets/img/proyectos/banner-funkomania.png" alt="Funkomania Banner" class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105" />
                         </div>
-                        <div class="p-6">
-                            <div class="text-xs font-semibold text-brand-blue uppercase tracking-wide mb-2">TFG Grupal - CFGS DAW</div>
-                            <h3 class="text-xl font-bold mb-2">Funkomania</h3>
-                            <p class="text-sm text-gray-600 dark:text-gray-400 mb-4 line-clamp-2">Ecommerce de especialización en Funko Pop.</p>
+                        <div class="p-5 sm:p-6">
+                            <div class="text-[10px] sm:text-xs font-semibold text-brand-blue uppercase tracking-wide mb-2">TFG Grupal - CFGS DAW</div>
+                            <h3 class="text-lg sm:text-xl font-bold mb-2">Funkomania</h3>
+                            <p class="text-xs sm:text-sm text-gray-600 dark:text-gray-400 mb-4 line-clamp-2">Ecommerce de especialización en Funko Pop.</p>
                             <div class="mb-4">
-                                <span class="text-xs font-bold text-gray-500 dark:text-gray-400 uppercase">Rol:</span>
-                                <p class="text-sm mt-1">Desarrollo integro del backend en entregas incrementales, documentación con swagger y dockerizacion.</p>
+                                <span class="text-[10px] sm:text-xs font-bold text-gray-500 dark:text-gray-400 uppercase">Rol:</span>
+                                <p class="text-xs sm:text-sm mt-1">Desarrollo integro del backend en entregas incrementales, documentación con swagger y dockerización.</p>
                             </div>
                             <div class="flex flex-wrap gap-2 mb-4">
-                                <span class="px-2 py-1 bg-gray-100 dark:bg-gray-800 text-gray-600 dark:text-gray-300 text-xs font-mono rounded-md border border-gray-200 dark:border-gray-700">Java</span>
-                                <span class="px-2 py-1 bg-gray-100 dark:bg-gray-800 text-gray-600 dark:text-gray-300 text-xs font-mono rounded-md border border-gray-200 dark:border-gray-700">Spring Boot</span>
-                                <span class="px-2 py-1 bg-gray-100 dark:bg-gray-800 text-gray-600 dark:text-gray-300 text-xs font-mono rounded-md border border-gray-200 dark:border-gray-700">MySQL</span>
-                                <span class="px-2 py-1 bg-gray-100 dark:bg-gray-800 text-gray-600 dark:text-gray-300 text-xs font-mono rounded-md border border-gray-200 dark:border-gray-700">Docker</span>
+                                <span class="px-2 py-1 bg-gray-100 dark:bg-gray-800 text-gray-600 dark:text-gray-300 text-[10px] sm:text-xs font-mono rounded-md border border-gray-200 dark:border-gray-700">Java</span>
+                                <span class="px-2 py-1 bg-gray-100 dark:bg-gray-800 text-gray-600 dark:text-gray-300 text-[10px] sm:text-xs font-mono rounded-md border border-gray-200 dark:border-gray-700">Spring Boot</span>
+                                <span class="px-2 py-1 bg-gray-100 dark:bg-gray-800 text-gray-600 dark:text-gray-300 text-[10px] sm:text-xs font-mono rounded-md border border-gray-200 dark:border-gray-700">MySQL</span>
+                                <span class="px-2 py-1 bg-gray-100 dark:bg-gray-800 text-gray-600 dark:text-gray-300 text-[10px] sm:text-xs font-mono rounded-md border border-gray-200 dark:border-gray-700">Docker</span>
                             </div>
                             <a href="https://github.com/JuanAlberticoHF/funkomania-backend" class="inline-flex items-center text-sm font-semibold text-brand-blue hover:underline">
                                 Repositorio
@@ -429,21 +446,21 @@
 
                     <!-- Project 2 -->
                     <div class="bg-white dark:bg-brand-cardDark border border-gray-200 dark:border-gray-800 rounded-3xl overflow-hidden shadow-lg group">
-                        <div class="h-48 bg-gray-200 dark:bg-gray-700 relative overflow-hidden">
+                        <div class="h-40 sm:h-48 bg-gray-200 dark:bg-gray-700 relative overflow-hidden">
                             <img src="assets/img/proyectos/banner-shareshopping.png" alt="ShareShopping Banner" class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105" />
                         </div>
-                        <div class="p-6">
-                            <div class="text-xs font-semibold text-brand-blue uppercase tracking-wide mb-2">TFG solitario - CFGS DAM</div>
-                            <h3 class="text-xl font-bold mb-2">ShareShopping</h3>
-                            <p class="text-sm text-gray-600 dark:text-gray-400 mb-4 line-clamp-2">Aplicación móvil de listas de compras compartidas.</p>
+                        <div class="p-5 sm:p-6">
+                            <div class="text-[10px] sm:text-xs font-semibold text-brand-blue uppercase tracking-wide mb-2">TFG solitario - CFGS DAM</div>
+                            <h3 class="text-lg sm:text-xl font-bold mb-2">ShareShopping</h3>
+                            <p class="text-xs sm:text-sm text-gray-600 dark:text-gray-400 mb-4 line-clamp-2">Aplicación móvil de listas de compras compartidas.</p>
                             <div class="mb-4">
-                                <span class="text-xs font-bold text-gray-500 dark:text-gray-400 uppercase">Rol:</span>
-                                <p class="text-sm mt-1">Desarrollo Fullstack con backend en FireBase.</p>
+                                <span class="text-[10px] sm:text-xs font-bold text-gray-500 dark:text-gray-400 uppercase">Rol:</span>
+                                <p class="text-xs sm:text-sm mt-1">Desarrollo Fullstack con backend en FireBase.</p>
                             </div>
                             <div class="flex flex-wrap gap-2 mb-4">
-                                <span class="px-2 py-1 bg-gray-100 dark:bg-gray-800 text-gray-600 dark:text-gray-300 text-xs font-mono rounded-md border border-gray-200 dark:border-gray-700">Flutter</span>
-                                <span class="px-2 py-1 bg-gray-100 dark:bg-gray-800 text-gray-600 dark:text-gray-300 text-xs font-mono rounded-md border border-gray-200 dark:border-gray-700">Dart</span>
-                                <span class="px-2 py-1 bg-gray-100 dark:bg-gray-800 text-gray-600 dark:text-gray-300 text-xs font-mono rounded-md border border-gray-200 dark:border-gray-700">Firebase</span>
+                                <span class="px-2 py-1 bg-gray-100 dark:bg-gray-800 text-gray-600 dark:text-gray-300 text-[10px] sm:text-xs font-mono rounded-md border border-gray-200 dark:border-gray-700">Flutter</span>
+                                <span class="px-2 py-1 bg-gray-100 dark:bg-gray-800 text-gray-600 dark:text-gray-300 text-[10px] sm:text-xs font-mono rounded-md border border-gray-200 dark:border-gray-700">Dart</span>
+                                <span class="px-2 py-1 bg-gray-100 dark:bg-gray-800 text-gray-600 dark:text-gray-300 text-[10px] sm:text-xs font-mono rounded-md border border-gray-200 dark:border-gray-700">Firebase</span>
                             </div>
                             <a href="https://github.com/JuanAlberticoHF/ShareShopping" class="inline-flex items-center text-sm font-semibold text-brand-blue hover:underline">
                                 Repositorio
@@ -455,7 +472,7 @@
             </div>
 
             <!-- Next Arrow -->
-            <button onclick="scrollToSection('formacion')" class="absolute bottom-8 flex flex-col items-center group opacity-70 hover:opacity-100 transition-opacity focus:outline-none">
+            <button onclick="scrollToSection('formacion')" class="hidden sm:flex absolute bottom-8 flex-col items-center group opacity-70 hover:opacity-100 transition-opacity focus:outline-none">
                 <span class="text-xs uppercase tracking-widest mb-2 font-medium">Formación</span>
                 <svg class="w-6 h-6 animate-bounce-slow" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
             </button>
@@ -464,118 +481,116 @@
         <!-- SECCIÓN 4: FORMACIÓN -->
         <section id="formacion" class="snap-section relative flex flex-col justify-center items-center px-6 lg:px-20">
             <div class="w-full max-w-6xl">
-                <h2 class="text-3xl md:text-4xl font-bold mb-10 uppercase tracking-wide">Formación</h2>
-                <div class="mb-6"><span class="text-sm font-semibold text-brand-blue uppercase tracking-widest">Educación Oficial</span></div>
+                <h2 class="text-3xl md:text-4xl font-bold mb-8 md:mb-10 uppercase tracking-wide text-center md:text-left">Formación</h2>
+                <div class="mb-6 text-center md:text-left"><span class="text-sm font-semibold text-brand-blue uppercase tracking-widest">Educación Oficial</span></div>
                 
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
                     <!-- Formacion 1 -->
-                    <div class="border-l-4 border-brand-blue pl-6 py-2">
-                        <div class="text-xs text-gray-500 font-bold mb-1">01</div>
-                        <h3 class="text-lg font-bold mb-1">CFGS Desarrollo de Aplicaciones Web</h3>
-                        <p class="text-sm text-gray-600 dark:text-gray-400 font-medium mb-1">IES Los Albores & IES Francisco de Goya</p>
-                        <p class="text-xs text-gray-500 mb-3">2025-Actualidad</p>
-                        <!--<p class="text-sm text-gray-700 dark:text-gray-300">• Descripción de lo aprendido en el curso enfocándose en desarrollo backend, frontend y bases de datos web.</p> -->
+                    <div class="border-l-4 border-brand-blue pl-4 sm:pl-6 py-2">
+                        <div class="text-[10px] sm:text-xs text-gray-500 font-bold mb-1">01</div>
+                        <h3 class="text-base sm:text-lg font-bold mb-1">CFGS Desarrollo de Aplicaciones Web</h3>
+                        <p class="text-xs sm:text-sm text-gray-600 dark:text-gray-400 font-medium mb-1">IES Los Albores & IES Francisco de Goya</p>
+                        <p class="text-[10px] sm:text-xs text-gray-500 mb-3">2025-Actualidad</p>
                     </div>
 
                     <!-- Formacion 2 -->
-                    <div class="border-l-4 border-brand-blue pl-6 py-2">
-                        <div class="text-xs text-gray-500 font-bold mb-1">02</div>
-                        <h3 class="text-lg font-bold mb-1">CFGS Desarrollo de Aplicaciones Multiplataforma</h3>
-                        <p class="text-sm text-gray-600 dark:text-gray-400 font-medium mb-1">IES Vicente Medina</p>
-                        <p class="text-xs text-gray-500 mb-3">2023-2025</p>
-                        <!--<p class="text-sm text-gray-700 dark:text-gray-300">• Descripción de lo aprendido en el curso enfocándose en desarrollo backend, frontend y bases de datos web.</p> -->                    </div>
+                    <div class="border-l-4 border-brand-blue pl-4 sm:pl-6 py-2">
+                        <div class="text-[10px] sm:text-xs text-gray-500 font-bold mb-1">02</div>
+                        <h3 class="text-base sm:text-lg font-bold mb-1">CFGS Desarrollo de Aplicaciones Multiplataforma</h3>
+                        <p class="text-xs sm:text-sm text-gray-600 dark:text-gray-400 font-medium mb-1">IES Vicente Medina</p>
+                        <p class="text-[10px] sm:text-xs text-gray-500 mb-3">2023-2025</p>
+                    </div>
 
                     <!-- Formacion 3 -->
-                    <div class="border-l-4 border-brand-blue pl-6 py-2 md:col-span-2 md:w-1/2">
-                        <div class="text-xs text-gray-500 font-bold mb-1">03</div>
-                        <h3 class="text-lg font-bold mb-1">Bachiller Científico Tecnológico</h3>
-                        <p class="text-sm text-gray-600 dark:text-gray-400 font-medium mb-1">IES Vicente Medina</p>
-                        <p class="text-xs text-gray-500 mb-3">2021-2023</p>
-                        <!-- <p class="text-sm text-gray-700 dark:text-gray-300">• Fundamentos lógicos y primer contacto con programación estructurada (C++).</p> -->
+                    <div class="border-l-4 border-brand-blue pl-4 sm:pl-6 py-2 md:col-span-2 md:w-1/2">
+                        <div class="text-[10px] sm:text-xs text-gray-500 font-bold mb-1">03</div>
+                        <h3 class="text-base sm:text-lg font-bold mb-1">Bachiller Científico Tecnológico</h3>
+                        <p class="text-xs sm:text-sm text-gray-600 dark:text-gray-400 font-medium mb-1">IES Vicente Medina</p>
+                        <p class="text-[10px] sm:text-xs text-gray-500 mb-3">2021-2023</p>
                     </div>
                 </div>
             </div>
 
             <!-- Next Arrow -->
-            <button onclick="scrollToSection('contacto')" class="absolute bottom-8 flex flex-col items-center group opacity-70 hover:opacity-100 transition-opacity focus:outline-none">
+            <button onclick="scrollToSection('contacto')" class="hidden sm:flex absolute bottom-8 flex-col items-center group opacity-70 hover:opacity-100 transition-opacity focus:outline-none">
                 <span class="text-xs uppercase tracking-widest mb-2 font-medium">Contacto</span>
                 <svg class="w-6 h-6 animate-bounce-slow" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
             </button>
         </section>
 
         <!-- SECCIÓN 5: CONTACTO -->
-        <section id="contacto" class="snap-section relative flex flex-col justify-center items-center px-6 lg:px-20">
+        <section id="contacto" class="snap-section relative flex flex-col justify-center items-center px-6 lg:px-20 pb-16">
             <div class="w-full max-w-6xl">
-                <h2 class="text-3xl md:text-4xl font-bold mb-8 uppercase tracking-wide">Contacto</h2>
+                <h2 class="text-3xl md:text-4xl font-bold mb-6 md:mb-8 uppercase tracking-wide text-center md:text-left">Contacto</h2>
 
-                <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 items-stretch">
+                <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-12 items-stretch">
                     
                     <!-- Left: Info -->
                     <div class="flex flex-col gap-4">
-                        <p class="text-sm md:text-base text-gray-600 dark:text-gray-400 mb-4">
+                        <p class="text-sm md:text-base text-gray-600 dark:text-gray-400 mb-2 md:mb-4 text-center md:text-left">
                             Actualmente estoy buscando empresas de practicas para completar mi titulación en desarrollo de aplicaciones web. Estoy motivado a continuar este camino, seguir formándome y contribuir positivamente con mi esfuerzo. ¡No dudes en contactarme!
                         </p>
                         
                         <!-- Email -->
-                        <div class="flex items-center p-4 border border-gray-200 dark:border-gray-800 rounded-2xl bg-white dark:bg-brand-cardDark hover:border-brand-blue dark:hover:border-brand-blue hover:shadow-md transition-all group">
-                            <div class="w-12 h-12 rounded-full bg-gray-100 dark:bg-gray-800 flex items-center justify-center mr-4 group-hover:bg-brand-blue group-hover:text-white transition-colors">
-                                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"></path></svg>
+                        <div class="flex items-center p-3 sm:p-4 border border-gray-200 dark:border-gray-800 rounded-2xl bg-white dark:bg-brand-cardDark hover:border-brand-blue dark:hover:border-brand-blue hover:shadow-md transition-all group">
+                            <div class="w-10 h-10 sm:w-12 sm:h-12 rounded-full bg-gray-100 dark:bg-gray-800 flex items-center justify-center mr-3 sm:mr-4 group-hover:bg-brand-blue group-hover:text-white transition-colors shrink-0">
+                                <svg class="w-4 h-4 sm:w-5 sm:h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"></path></svg>
                             </div>
-                            <div>
-                                <h4 class="text-xs font-bold text-gray-500 uppercase">Email</h4>
-                                <p class="text-sm font-medium group-hover:text-brand-blue transition-colors">juanalbertoh.fernandez@gmail.com</p>
+                            <div class="overflow-hidden">
+                                <h4 class="text-[10px] sm:text-xs font-bold text-gray-500 uppercase">Email</h4>
+                                <p class="text-xs sm:text-sm font-medium group-hover:text-brand-blue transition-colors truncate">juanalbertoh.fernandez@gmail.com</p>
                             </div>
                         </div>
 
                         <!-- LinkedIn -->
-                        <a href="https://www.linkedin.com/in/juanalbertohf/" class="flex items-center p-4 border border-gray-200 dark:border-gray-800 rounded-2xl bg-white dark:bg-brand-cardDark hover:border-brand-blue dark:hover:border-brand-blue hover:shadow-md transition-all group cursor-pointer">
-                            <div class="w-12 h-12 rounded-full bg-gray-100 dark:bg-gray-800 flex items-center justify-center mr-4 group-hover:bg-brand-blue group-hover:text-white transition-colors">
-                                <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24"><path d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.783 1.764-1.75 1.764zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z"/></svg>
+                        <a href="https://www.linkedin.com/in/juanalbertohf/" class="flex items-center p-3 sm:p-4 border border-gray-200 dark:border-gray-800 rounded-2xl bg-white dark:bg-brand-cardDark hover:border-brand-blue dark:hover:border-brand-blue hover:shadow-md transition-all group cursor-pointer">
+                            <div class="w-10 h-10 sm:w-12 sm:h-12 rounded-full bg-gray-100 dark:bg-gray-800 flex items-center justify-center mr-3 sm:mr-4 group-hover:bg-brand-blue group-hover:text-white transition-colors shrink-0">
+                                <svg class="w-4 h-4 sm:w-5 sm:h-5" fill="currentColor" viewBox="0 0 24 24"><path d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.783 1.764-1.75 1.764zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z"/></svg>
                             </div>
-                            <div>
-                                <h4 class="text-xs font-bold text-gray-500 uppercase">LinkedIn</h4>
-                                <p class="text-sm font-medium group-hover:text-brand-blue transition-colors">JuanAlbertoHF</p>
+                            <div class="overflow-hidden">
+                                <h4 class="text-[10px] sm:text-xs font-bold text-gray-500 uppercase">LinkedIn</h4>
+                                <p class="text-xs sm:text-sm font-medium group-hover:text-brand-blue transition-colors truncate">JuanAlbertoHF</p>
                             </div>
                         </a>
 
                         <!-- GitHub -->
-                        <a href="https://github.com/JuanAlberticoHF" class="flex items-center p-4 border border-gray-200 dark:border-gray-800 rounded-2xl bg-white dark:bg-brand-cardDark hover:border-brand-blue dark:hover:border-brand-blue hover:shadow-md transition-all group cursor-pointer">
-                            <div class="w-12 h-12 rounded-full bg-gray-100 dark:bg-gray-800 flex items-center justify-center mr-4 group-hover:bg-brand-blue group-hover:text-white transition-colors">
-                                <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24"><path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/></svg>
+                        <a href="https://github.com/JuanAlberticoHF" class="flex items-center p-3 sm:p-4 border border-gray-200 dark:border-gray-800 rounded-2xl bg-white dark:bg-brand-cardDark hover:border-brand-blue dark:hover:border-brand-blue hover:shadow-md transition-all group cursor-pointer">
+                            <div class="w-10 h-10 sm:w-12 sm:h-12 rounded-full bg-gray-100 dark:bg-gray-800 flex items-center justify-center mr-3 sm:mr-4 group-hover:bg-brand-blue group-hover:text-white transition-colors shrink-0">
+                                <svg class="w-4 h-4 sm:w-5 sm:h-5" fill="currentColor" viewBox="0 0 24 24"><path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/></svg>
                             </div>
-                            <div>
-                                <h4 class="text-xs font-bold text-gray-500 uppercase">GitHub</h4>
-                                <p class="text-sm font-medium group-hover:text-brand-blue transition-colors">JuanAlberticoHF</p>
+                            <div class="overflow-hidden">
+                                <h4 class="text-[10px] sm:text-xs font-bold text-gray-500 uppercase">GitHub</h4>
+                                <p class="text-xs sm:text-sm font-medium group-hover:text-brand-blue transition-colors truncate">JuanAlberticoHF</p>
                             </div>
                         </a>
 
                         <!-- Ubicacion y Disponibilidad en fila -->
-                        <div class="grid grid-cols-2 gap-4">
+                        <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
                             <!-- Ubicacion -->
-                            <div class="flex items-center p-4 border border-gray-200 dark:border-gray-800 rounded-2xl bg-white dark:bg-brand-cardDark hover:border-brand-blue dark:hover:border-brand-blue hover:shadow-md transition-all group">
-                                <div class="w-12 h-12 shrink-0 rounded-full bg-gray-100 dark:bg-gray-800 flex items-center justify-center mr-3 group-hover:bg-brand-blue group-hover:text-white transition-colors">
-                                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"></path><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"></path></svg>
+                            <div class="flex items-center p-3 sm:p-4 border border-gray-200 dark:border-gray-800 rounded-2xl bg-white dark:bg-brand-cardDark hover:border-brand-blue dark:hover:border-brand-blue hover:shadow-md transition-all group">
+                                <div class="w-10 h-10 sm:w-12 sm:h-12 shrink-0 rounded-full bg-gray-100 dark:bg-gray-800 flex items-center justify-center mr-3 group-hover:bg-brand-blue group-hover:text-white transition-colors">
+                                    <svg class="w-4 h-4 sm:w-5 sm:h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"></path><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"></path></svg>
                                 </div>
                                 <div class="overflow-hidden">
-                                    <h4 class="text-xs font-bold text-gray-500 uppercase">Ubicación</h4>
-                                    <p class="text-sm font-medium group-hover:text-brand-blue transition-colors truncate">Región de Murcia, España</p>
+                                    <h4 class="text-[10px] sm:text-xs font-bold text-gray-500 uppercase">Ubicación</h4>
+                                    <p class="text-xs sm:text-sm font-medium group-hover:text-brand-blue transition-colors truncate">Región de Murcia</p>
                                 </div>
                             </div>
 
                             <!-- Disponibilidad -->
-                            <div class="flex items-center p-4 border border-gray-200 dark:border-gray-800 rounded-2xl bg-white dark:bg-brand-cardDark hover:border-brand-blue dark:hover:border-brand-blue hover:shadow-md transition-all group">
-                                <div class="w-12 h-12 shrink-0 rounded-full bg-gray-100 dark:bg-gray-800 flex items-center justify-center mr-3 group-hover:bg-brand-blue group-hover:text-white transition-colors">
-                                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+                            <div class="flex items-center p-3 sm:p-4 border border-gray-200 dark:border-gray-800 rounded-2xl bg-white dark:bg-brand-cardDark hover:border-brand-blue dark:hover:border-brand-blue hover:shadow-md transition-all group">
+                                <div class="w-10 h-10 sm:w-12 sm:h-12 shrink-0 rounded-full bg-gray-100 dark:bg-gray-800 flex items-center justify-center mr-3 group-hover:bg-brand-blue group-hover:text-white transition-colors">
+                                    <svg class="w-4 h-4 sm:w-5 sm:h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
                                 </div>
                                 <div class="overflow-hidden">
-                                    <h4 class="text-xs font-bold text-gray-500 uppercase">Disponibilidad</h4>
-                                    <p class="text-sm font-medium group-hover:text-brand-blue transition-colors truncate">Prácticas FCT remotas</p>
+                                    <h4 class="text-[10px] sm:text-xs font-bold text-gray-500 uppercase">Disponibilidad</h4>
+                                    <p class="text-xs sm:text-sm font-medium group-hover:text-brand-blue transition-colors truncate">Prácticas FCT</p>
                                 </div>
                             </div>
                         </div>
 
                         <!-- Botón Descargar CV en Contacto -->
-                        <div class="mt-auto pt-4">
+                        <div class="mt-2 sm:mt-auto pt-4">
                             <button onclick="downloadCV()" class="px-6 py-3 w-full sm:w-auto border border-brand-dark dark:border-brand-light font-medium rounded hover:bg-brand-dark hover:text-white dark:hover:bg-brand-light dark:hover:text-brand-dark transition-colors flex items-center justify-center gap-2">
                                 <i class="fa-solid fa-download"></i> Descargar CV
                             </button>
@@ -584,22 +599,22 @@
                     </div>
 
                     <!-- Right: Form -->
-                    <div class="bg-white dark:bg-brand-cardDark border border-gray-200 dark:border-gray-800 rounded-3xl p-8 shadow-xl flex flex-col">
-                        <h3 class="text-xl font-bold mb-6">Envíame un mensaje &nbsp;<span class="px-3 py-2 bg-gray-100 dark:bg-gray-800 text-red-500 dark:text-red-400 text-xs font-mono rounded-md border border-gray-200 dark:border-gray-700">Deshabilitado</span></h3>
+                    <div class="bg-white dark:bg-brand-cardDark border border-gray-200 dark:border-gray-800 rounded-3xl p-6 sm:p-8 shadow-xl flex flex-col mt-6 lg:mt-0">
+                        <h3 class="text-lg sm:text-xl font-bold mb-4 sm:mb-6">Envíame un mensaje &nbsp;<span class="inline-block mt-2 sm:mt-0 px-2 py-1 bg-gray-100 dark:bg-gray-800 text-red-500 dark:text-red-400 text-[10px] sm:text-xs font-mono rounded-md border border-gray-200 dark:border-gray-700">Deshabilitado</span></h3>
                         <form id="contact-form" class="flex flex-col flex-1 space-y-4">
                             <div>
-                                <label for="name" class="block text-sm font-medium mb-1">Nombre</label>
-                                <input type="text" id="name" disabled class="w-full bg-gray-50 dark:bg-gray-800 border border-gray-300 dark:border-gray-700 rounded-lg px-4 py-2 focus:outline-none focus:ring-2 focus:ring-brand-blue focus:border-transparent transition-all" placeholder="Tu nombre">
+                                <label for="name" class="block text-xs sm:text-sm font-medium mb-1">Nombre</label>
+                                <input type="text" id="name" disabled class="w-full bg-gray-50 dark:bg-gray-800 border border-gray-300 dark:border-gray-700 rounded-lg px-3 sm:px-4 py-2 focus:outline-none focus:ring-2 focus:ring-brand-blue focus:border-transparent transition-all text-sm" placeholder="Tu nombre">
                             </div>
                             <div>
-                                <label for="email" class="block text-sm font-medium mb-1">Correo</label>
-                                <input type="email" id="email" disabled class="w-full bg-gray-50 dark:bg-gray-800 border border-gray-300 dark:border-gray-700 rounded-lg px-4 py-2 focus:outline-none focus:ring-2 focus:ring-brand-blue focus:border-transparent transition-all" placeholder="tucorreo@ejemplo.com">
+                                <label for="email" class="block text-xs sm:text-sm font-medium mb-1">Correo</label>
+                                <input type="email" id="email" disabled class="w-full bg-gray-50 dark:bg-gray-800 border border-gray-300 dark:border-gray-700 rounded-lg px-3 sm:px-4 py-2 focus:outline-none focus:ring-2 focus:ring-brand-blue focus:border-transparent transition-all text-sm" placeholder="tucorreo@ejemplo.com">
                             </div>
                             <div class="flex flex-col flex-1">
-                                <label for="message" class="block text-sm font-medium mb-1">Mensaje</label>
-                                <textarea id="message" disabled class="flex-1 w-full bg-gray-50 dark:bg-gray-800 border border-gray-300 dark:border-gray-700 rounded-lg px-4 py-2 focus:outline-none focus:ring-2 focus:ring-brand-blue focus:border-transparent transition-all resize-none min-h-[120px]" placeholder="¿En qué puedo ayudarte?"></textarea>
+                                <label for="message" class="block text-xs sm:text-sm font-medium mb-1">Mensaje</label>
+                                <textarea id="message" disabled class="flex-1 w-full bg-gray-50 dark:bg-gray-800 border border-gray-300 dark:border-gray-700 rounded-lg px-3 sm:px-4 py-2 focus:outline-none focus:ring-2 focus:ring-brand-blue focus:border-transparent transition-all resize-none min-h-[100px] sm:min-h-[120px] text-sm" placeholder="¿En qué puedo ayudarte?"></textarea>
                             </div>
-                            <button type="submit" id="submit-btn" disabled class="w-full bg-brand-blue hover:bg-blue-600 disabled:bg-gray-400 dark:disabled:bg-gray-700 disabled:cursor-not-allowed text-white font-medium py-3 rounded-lg transition-colors mt-4">
+                            <button type="submit" id="submit-btn" disabled class="w-full bg-brand-blue hover:bg-blue-600 disabled:bg-gray-400 dark:disabled:bg-gray-700 disabled:cursor-not-allowed text-white font-medium py-3 rounded-lg transition-colors mt-4 text-sm sm:text-base">
                                 Enviar
                             </button>
                         </form>
@@ -609,8 +624,8 @@
             </div>
             
             <!-- Footer -->
-            <footer class="absolute bottom-6 left-0 w-full text-center">
-                <p class="text-xs text-gray-400 dark:text-gray-500 font-medium tracking-wide">
+            <footer class="absolute bottom-4 left-0 w-full text-center">
+                <p class="text-[10px] sm:text-xs text-gray-400 dark:text-gray-500 font-medium tracking-wide">
                     @2026 Juan Alberto Hernández Fernández
                 </p>
             </footer>

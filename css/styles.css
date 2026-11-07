@@ -11,7 +11,7 @@ body {
     transition: background-color 0.4s ease, color 0.4s ease;
 }
 
-/* Dark/Light Mode Variables for custom elements if needed */
+/* Dark/Light Mode Variables */
 .dark {
     --bg-color: #121212;
     --text-color: #f8fafc;
@@ -24,7 +24,7 @@ body {
 /* Scroll Snapping Container */
 .snap-container {
     height: 100vh;
-    overflow-y: scroll;
+    overflow-y: auto;
     scroll-snap-type: y mandatory;
     scrollbar-width: none; /* Firefox */
 }
@@ -32,25 +32,42 @@ body {
     display: none; /* Chrome/Safari */
 }
 
+/* 
+  Flexible Heights for Responsive Sections: 
+  min-height allows content to stack in mobile without overlapping 
+*/
 .snap-section {
     scroll-snap-align: start;
     scroll-snap-stop: always;
-    height: 100vh;
+    min-height: 100vh;
+    height: auto;
     padding-top: 80px; /* Offset for header */
+    padding-bottom: 2rem;
+    position: relative; /* Fixes absolute button placement */
 }
 
-/* Custom scrollbar for inner elements if needed */
-::-webkit-scrollbar {
-    width: 8px;
+/* 
+  Fuerza la altura estricta al 100% de la ventana en la sección Skills 
+  para habilitar su scroll interno y asegurar que el botón inferior sea visible 
+*/
+#skills {
+    height: 100vh;
+    overflow: hidden;
+    padding-bottom: 0;
 }
-::-webkit-scrollbar-track {
+
+/* Custom scrollbar for inner elements (Skills categories) */
+.custom-scrollbar::-webkit-scrollbar {
+    width: 6px;
+}
+.custom-scrollbar::-webkit-scrollbar-track {
     background: transparent;
 }
-::-webkit-scrollbar-thumb {
+.custom-scrollbar::-webkit-scrollbar-thumb {
     background: #cbd5e1;
     border-radius: 4px;
 }
-.dark ::-webkit-scrollbar-thumb {
+.dark .custom-scrollbar::-webkit-scrollbar-thumb {
     background: #475569;
 }
 
@@ -59,10 +76,15 @@ body {
     transition: all 0.3s ease;
 }
 #header.scrolled {
-    height: 72px; /* 10% smaller than 80px */
+    height: 64px; /* 20% smaller than 80px for mobile friendliness */
 }
 #header.scrolled .nav-link {
     font-size: 0.875rem;
+}
+
+/* Adjust mobile menu to stick right under the scrolled header */
+#header.scrolled ~ #mobile-menu {
+    top: 64px;
 }
 
 /* Bouncing Arrow */
