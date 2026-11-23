@@ -8,6 +8,38 @@ Este proyecto es un Portfolio Personal desarrollado como una Single Page Applica
 - **Diseño:** Responsive con enfoque en UX mediante scroll snapping y transiciones suaves.
 - **Activos:** FontAwesome, Google Fonts, Documentación en Markdown.
 
+## Estructura del Proyecto y Responsabilidades de Archivos
+
+Este proyecto está estructurado como una Single Page Application (SPA) con el objetivo de mantener una arquitectura clara y modular.
+
+**Estructura Base:**
+```ascii
+.
+├── index.html             # Estructura base de la SPA, con HTML y clases de Tailwind CSS.
+├── css/
+│   └── styles.css        # Estilos CSS personalizados (complemento a Tailwind).
+├── js/
+│   └── main.js           # Lógica principal de cliente (Vanilla JS): scroll snapping, manejo de eventos, estado.
+├── assets/
+│   ├── docs/             # Contenido estático y documentación:
+│   │   ├── documentacion.md # Descripción técnica del proyecto.
+│   │   └── jahf-cv.pdf      # Documentación personal (CV).
+│   └── img/              # Activos gráficos:
+│       ├── pfp.png        # Foto de perfil.
+│       └── proyectos/     # Banners e imágenes específicas de proyectos.
+│           ├── banner-shareshopping.png
+│           └── banner-funkomania.png
+└── AGENTS.md             # Documento de planificación de agentes y roles.
+```
+
+**Responsabilidades de Archivos:**
+
+*   **`index.html`**: Punto de entrada principal. Contiene la estructura base (markup) de la página y se encarga de enlazar la lógica principal y los activos.
+*   **`js/main.js`**: Contiene la lógica de cliente en Vanilla JavaScript. Responsable de gestionar la interactividad, el *scroll snapping*, la barra de progreso y el manejo de eventos del DOM.
+*   **`css/styles.css`**: Define estilos CSS adicionales que complementan el uso de Tailwind CSS.
+*   **`assets/docs/`**: Almacena contenido estático y documentación, incluyendo archivos de descripciones (`documentacion.md`) y documentos personales (`jahf-cv.pdf`).
+*   **`assets/img/`**: Contiene todos los activos gráficos necesarios, como fotos de perfil (`pfp.png`) y banners de proyectos.
+
 ## Roles de Agentes
 
 ### 1. Agente de UI/UX y Estilos (Tailwind Expert)
