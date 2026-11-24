@@ -175,44 +175,90 @@ skillItems.forEach(item => {
     });
 });
 
-// --- Form Validation Logic ---
 const contactForm = document.getElementById('contact-form');
 const inputName = document.getElementById('name');
 const inputEmail = document.getElementById('email');
 const inputMessage = document.getElementById('message');
 const submitBtn = document.getElementById('submit-btn');
+const successMsg = document.querySelector('[data-fs-success]');
+const errorMsg = document.querySelector('[data-fs-error]');
 
 const validateForm = () => {
     const nameVal = inputName.value.trim();
     const emailVal = inputEmail.value.trim();
     const messageVal = inputMessage.value.trim();
     
-    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/; // Regex simple RFC
+
+    const isNameValid = nameVal.length >= 2 && nameVal.length <= 80;
+    const isEmailValid = emailRegex.test(emailVal) && emailVal.length <= 254;
+    const isMessageValid = messageVal.length >= 10 && messageVal.length <= 2500;
+
+    // El botón se habilita solo si todos los campos son válidos
+    const isFormValid = isNameValid && isEmailValid && isMessageValid;
+    submitBtn.disabled = !isFormValid;
     
-    if (nameVal !== '' && messageVal !== '' && emailRegex.test(emailVal)) {
-        submitBtn.disabled = false;
-    } else {
-        submitBtn.disabled = true;
-    }
+    // Aplicar estilos de error visualmente
+    inputName.classList.toggle('border-red-500', nameVal !== '' && !isNameValid);
+    inputEmail.classList.toggle('border-red-500', emailVal !== '' && !isEmailValid);
+    inputMessage.classList.toggle('border-red-500', messageVal !== '' && !isMessageValid);
 };
 
-inputName.addEventListener('input', validateForm);
-inputEmail.addEventListener('input', validateForm);
-inputMessage.addEventListener('input', validateForm);
+// Escuchar cambios en todos los campos
+[inputName, inputEmail, inputMessage].forEach(input => {
+    input.addEventListener('input', validateForm);
+    input.addEventListener('blur', validateForm); // También al perder el foco
+});
 
-contactForm.addEventListener('submit', (e) => {
+// Ejecutar validación inicial al cargar
+validateForm();
+
+contactForm.addEventListener('submit', async (e) => {
     e.preventDefault();
-    const box = document.createElement('div');
-    box.className = 'fixed bottom-4 right-4 bg-brand-blue text-white px-6 py-3 rounded-lg shadow-lg z-50 animate-bounce-slow text-sm sm:text-base';
-    box.innerText = '¡Mensaje simulado enviado con éxito!';
-    document.body.appendChild(box);
     
-    contactForm.reset();
-    validateForm();
+    // Doble verificación de seguridad
+    if (submitBtn.disabled) {
+        return;
+    }
 
-    setTimeout(() => {
-        box.remove();
-    }, 3000);
+    // UI State: Submitting
+    submitBtn.disabled = true;
+    submitBtn.innerText = 'Enviando...';
+    successMsg.style.display = 'none';
+    errorMsg.style.display = 'none';
+    
+    // Accessibility: focus messages when they appear
+    successMsg.setAttribute('tabindex', '-1');
+    errorMsg.setAttribute('tabindex', '-1');
+
+    try {
+        const formData = new FormData(contactForm);
+        // Remove honeypot field from data sent to Formspree
+        formData.delete('hp_field');
+
+        const response = await fetch('https://formspree.io/f/xaeoavnz', {
+            method: 'POST',
+            body: new URLSearchParams(formData).toString(),
+            headers: {
+                'Content-Type': 'application/x-www-form-urlencoded',
+            }
+        });
+
+        if (response.ok) {
+            successMsg.style.display = 'block';
+            successMsg.focus();
+            contactForm.reset();
+            validateForm();
+        } else {
+            throw new Error('Server error');
+        }
+    } catch (error) {
+        errorMsg.style.display = 'block';
+        errorMsg.focus();
+    } finally {
+        submitBtn.disabled = false;
+        submitBtn.innerText = 'Enviar';
+    }
 });
 
 function downloadCV() {
