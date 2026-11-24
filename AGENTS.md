@@ -40,6 +40,10 @@ Este proyecto está estructurado como una Single Page Application (SPA) con el o
 *   **`assets/docs/`**: Almacena contenido estático y documentación, incluyendo archivos de descripciones (`documentacion.md`) y documentos personales (`jahf-cv.pdf`).
 *   **`assets/img/`**: Contiene todos los activos gráficos necesarios, como fotos de perfil (`pfp.png`) y banners de proyectos.
 
+## Documentación Tecnica
+
+Para consultar documentación tecnica del proyecto acceder a [assets/docs/documentacion.md](./assets/docs/documentacion.md).
+
 ## Roles de Agentes
 
 ### 1. Agente de UI/UX y Estilos (Tailwind Expert)
