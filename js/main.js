@@ -241,6 +241,7 @@ contactForm.addEventListener('submit', async (e) => {
             body: new URLSearchParams(formData).toString(),
             headers: {
                 'Content-Type': 'application/x-www-form-urlencoded',
+                'Accept': 'application/json'
             }
         });
 
