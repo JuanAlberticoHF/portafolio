@@ -61,6 +61,8 @@ Para consultar documentación tecnica del proyecto acceder a [assets/docs/docume
     - Mantén la lógica de `scroll-snapping` y la barra de progreso sincronizada.
     - Asegura que el manejo de eventos para la sección de "Skills" (hover/tap) sea eficiente.
     - Implementa validaciones de formulario y manejo de estados de UI sin depender de librerías externas.
+    - Mantén la integridad de la lógica de envío de Formspree (uso de `fetch`, cabeceras JSON y eliminación del campo honeypot).
+    - Asegura que cualquier modificación a la validación mantenga la retroalimentación visual (bordes de error) y la gestión de accesibilidad (foco en mensajes).
 
 ### 3. Agente de Contenido y Documentación
 - **Propósito:** Mantener actualizada la información personal, proyectos y documentación técnica.

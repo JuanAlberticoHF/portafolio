@@ -38,7 +38,7 @@ El contenido principal (`<main>`) actúa como un contenedor de desplazamiento. S
 
 5. **Formación (`#formacion`):** Línea de tiempo / tarjetas de educación oficial.
 
-6. **Contacto (`#contacto`):** Enlaces directos a redes, información de ubicación/disponibilidad y un formulario de contacto validado en el cliente.
+6. **Contacto (`#contacto`):** Enlaces directos a redes, información de ubicación/disponibilidad y un formulario de contacto validado en el cliente e integrado con **Formspree** mediante peticiones asíncronas (AJAX).
 
 ### Patrones de Diseño de Interfaz
 
@@ -86,4 +86,10 @@ El archivo JavaScript orquesta varias funcionalidades clave:
 
 * **Panel de Habilidades Dinámico:** Al realizar `mouseenter` sobre cualquier `.skill-item`, JS extrae los atributos de datos (`data-name`, `data-level`, `data-desc`) y el HTML del icono para inyectarlos en el panel lateral (`#skill-info-box`) aplicando transiciones de opacidad y escala.
 
-* **Validación de Formulario:** Escucha los eventos `input` en los campos del formulario. Utiliza expresiones regulares (Regex) para validar el formato del correo electrónico y asegura que ningún campo esté vacío antes de habilitar el botón de envío.
+* **Validación y Envío de Formulario:**
+  - **Validación en Tiempo Real:** Escucha eventos `input` y `blur` para validar nombre (longitud), correo (Regex RFC) y mensaje (longitud) antes del envío.
+  - **Feedback Visual:** Aplica clases dinámicas de Tailwind para mostrar bordes de error y contenedores de éxito/error en pantalla.
+  - **Gestión de Estado Asíncrono:** Implementa un estado `isSubmitting` que deshabilita el botón de envío y actualiza su texto dinámicamente durante la petición.
+  - **Seguridad (Honeypot):** Incluye un campo oculto para prevenir envíos automatizados por bots, eliminándolo del objeto de envío antes de procesarlo.
+  - **Accesibilidad (A11y):** Gestiona el foco automáticamente sobre los mensajes de éxito o error para asegurar que sean detectados por lectores de pantalla.
+  - **Manejo de CORS:** Utiliza la cabecera `Accept: application/json` para garantizar que la respuesta del servicio sea procesable correctamente por el navegador.
